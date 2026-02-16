@@ -1,0 +1,35 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+
+      <div class="card shadow-lg border-0">
+        <!-- Header avec fond orange doux -->
+        <div class="card-header" style="background-color: #FFA756; color: white;">
+          <h2 class="mb-0"><%= @gossip.title %></h2>
+        </div>
+
+        <div class="card-body">
+          <!-- Auteur avec badge -->
+          <p class="mb-2">
+            <span class="badge" style="background-color: #FFC28D; color: #333;">
+              Auteur : <%= @gossip.user.first_name %>
+            </span>
+          </p>
+
+          <!-- Date de création en petit texte -->
+          <p class="text-muted small mb-3">
+            Créé le <%= @gossip.created_at.strftime("%d %B %Y") %>
+          </p>
+
+          <!-- Contenu du gossip -->
+          <p class="lead" style="line-height: 1.6;"><%= @gossip.content %></p>
+        </div>
+
+        <div class="card-footer text-end bg-light">
+          <%= link_to "Retour à la liste", gossips_path, class: "btn btn-outline-warning" %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

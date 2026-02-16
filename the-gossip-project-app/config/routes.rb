@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "gossips/show"
   
   root "home#index"
 
@@ -6,4 +7,6 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   get '/static_pages/contact', to: 'static_pages#contact'
   get '/static_pages/team', to: 'static_pages#team'
+  get 'gossips', to: 'gossips#index', as: :gossips
+  get 'gossips/:id', to: 'gossips#show', as: :gossip
 end

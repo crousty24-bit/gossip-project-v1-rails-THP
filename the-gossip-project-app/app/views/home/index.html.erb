@@ -1,26 +1,32 @@
 <div class="container mt-5">
-  <h1 class="mb-4 text-center">Bienvenue sur The Gossip Project !</h1>
-
-  <div class="row">
+  <div class="row g-4"> <!-- g-4 = gutter entre les cartes -->
     <% @gossips.each do |gossip| %>
-      <div class="col-sm-6 col-md-4 mb-4"> <!-- Grille responsive -->
-        
-        <div class="card">
-          <div class="card-body">
-            <!-- titre du gossip -->
-            <h5 class="card-title"><%= gossip.title %></h5>
-            
-            <!-- author(user) du gossip-->
-            <h6 class="card-subtitle mb-2 text-muted">
-              Auteur : <%= gossip.user.first_name %>
-            </h6>
-            
-            <p class="card-text">Gossip : <%= gossip.content %></p>
+      <div class="col-sm-12 col-md-4"> <!-- 3 cartes par ligne sur md et plus -->
+        <%= link_to gossip_path(gossip), class: "text-decoration-none" do %>
+          <div class="card shadow-sm border-0">
+            <!-- Header doux -->
+            <div class="card-header" style="background-color: #FFD8A8; color: #333;">
+              <h5 class="mb-0"><%= gossip.title %></h5>
+            </div>
 
-            
+            <div class="card-body">
+              <!-- Badge auteur subtil -->
+              <span class="badge mb-2" style="background-color: #FFE6CC; color: #555;">
+                Auteur : <%= gossip.user.first_name %>
+              </span>
+
+              <!-- Contenu -->
+              <p class="card-text" style="overflow: hidden;">
+                <%= gossip.content %>
+              </p>
+            </div>
+
+            <!-- Footer discret -->
+            <div class="card-footer bg-light text-end">
+              <small class="text-muted">Voir plus →</small>
+            </div>
           </div>
-        </div>
-
+        <% end %>
       </div>
     <% end %>
   </div>

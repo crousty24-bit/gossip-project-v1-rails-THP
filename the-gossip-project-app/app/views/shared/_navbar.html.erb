@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-2">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-2 fixed-top">
     <a class="navbar-brand" href="#">
         <img src="https://www.svgrepo.com/show/303109/adobe-xd-logo.svg" alt="Logo" height="40">
     </a>
@@ -8,16 +8,13 @@
     <div class="collapse navbar-collapse p-2" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <%= link_to "Home", root_path, class: "nav-link active", "aria-current"=>"page"%>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <%= link_to "Team", static_pages_team_path, class: "nav-link"%>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Services</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
+                <%= link_to "Contact", static_pages_contact_path, class: "nav-link"%>
             </li>
         </ul>
         <form class="d-flex">

@@ -1,27 +1,28 @@
-<div class="container mt-5">
-  <div class="row g-4"> <!-- g-4 = gutter entre les cartes -->
+<div class="container mt-4">
+  <!-- Jumbotron moderne -->
+  <div class="p-5 mb-5 rounded shadow text-center" 
+      style="background-color: #FFF9F0; color: #000; font-family: 'Poppins', sans-serif;">
+    <h1 class="display-4 fw-bold">Bienvenue <%= @first_name %> !</h1>
+    <p class="lead mt-3">Voici les derniers potins du site. Amuse-toi bien et reste à jour !</p>
+  </div>
+
+  <!-- Liste des gossips -->
+  <div class="row g-4">
     <% @gossips.each do |gossip| %>
-      <div class="col-sm-12 col-md-4"> <!-- 3 cartes par ligne sur md et plus -->
+      <div class="col-sm-12 col-md-4">
         <%= link_to gossip_path(gossip), class: "text-decoration-none" do %>
-          <div class="card shadow-sm border-0">
-            <!-- Header doux -->
+          <div class="card shadow-sm border-0 h-100">
             <div class="card-header" style="background-color: #FFD8A8; color: #333;">
               <h5 class="mb-0"><%= gossip.title %></h5>
             </div>
-
             <div class="card-body">
-              <!-- Badge auteur subtil -->
               <span class="badge mb-2" style="background-color: #FFE6CC; color: #555;">
                 Auteur : <%= gossip.user.first_name %>
               </span>
-
-              <!-- Contenu -->
               <p class="card-text" style="overflow: hidden;">
                 <%= gossip.content %>
               </p>
             </div>
-
-            <!-- Footer discret -->
             <div class="card-footer bg-light text-end">
               <small class="text-muted">Voir plus →</small>
             </div>

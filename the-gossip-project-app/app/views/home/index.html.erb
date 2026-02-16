@@ -1,1 +1,27 @@
-TG 
+<div class="container mt-5">
+  <h1 class="mb-4 text-center">Bienvenue sur The Gossip Project !</h1>
+
+  <div class="row">
+    <% @gossips.each do |gossip| %>
+      <div class="col-sm-6 col-md-4 mb-4"> <!-- Grille responsive -->
+        
+        <div class="card">
+          <div class="card-body">
+            <!-- titre du gossip -->
+            <h5 class="card-title"><%= gossip.title %></h5>
+            
+            <!-- author(user) du gossip-->
+            <h6 class="card-subtitle mb-2 text-muted">
+              Auteur : <%= gossip.user.first_name %>
+            </h6>
+            
+            <p class="card-text">Gossip : <%= gossip.content %></p>
+
+            
+          </div>
+        </div>
+
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  get "gossips/show"
-  
   root "home#index"
 
+  get "/users/:id", to: "users#show", as:"user"
   get "welcome/:first_name", to: "dynamic_pages#welcome"
   get "up" => "rails/health#show", as: :rails_health_check
   get '/static_pages/contact', to: 'static_pages#contact'

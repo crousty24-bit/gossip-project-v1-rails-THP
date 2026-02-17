@@ -3,7 +3,8 @@
   <div class="p-5 mb-5 rounded shadow text-center" 
       style="background-color: #FFF9F0; color: #000; font-family: 'Poppins', sans-serif;">
     <h1 class="display-4 fw-bold">Bienvenue <%= @first_name %> !</h1>
-    <p class="lead mt-3">Voici les derniers potins du site. Amuse-toi bien et reste à jour !</p>
+    <p class="lead mt-3">Voici les derniers potins du site. Clique sur le bouton ci-dessous pour créer le tiens</p>
+    <%= link_to "Créer mon potin", new_gossip_path, class: "btn btn-primary" %>
   </div>
 
   <!-- Liste des gossips -->

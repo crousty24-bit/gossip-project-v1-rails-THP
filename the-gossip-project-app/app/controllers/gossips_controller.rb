@@ -3,6 +3,7 @@ class GossipsController < ApplicationController
     @gossip = Gossip.find(params[:id])
   end
   def new
+    @gossip = Gossip.new
   end
   def create
     @gossip = Gossip.new(gossip_params)# 1) On récupère les données envoyées par le formulaire

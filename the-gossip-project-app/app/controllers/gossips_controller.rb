@@ -7,6 +7,7 @@ class GossipsController < ApplicationController
   end
   def create
     @gossip = Gossip.new(gossip_params)# 1) On récupère les données envoyées par le formulaire
+    @gossip.user = User.find_by(first_name:"Anonymous")
     if @gossip.save# 2) On tente de sauvegarder en base de données
       redirect_to gossip_path(@gossip), notice: "Potin créé avec succès !"# 3) Si succès → redirection vers la page show du potin créé
     else

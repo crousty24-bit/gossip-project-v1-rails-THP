@@ -28,8 +28,12 @@
     <%= render 'shared/navbar' %>
   </header>
   <body class="d-flex flex-column min-vh-100">
-    <p class="alert alert-success"><%= notice %></p>
-    <p class="alert alert-danger"><%= alert %></p>
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
     <%= yield %>
     <%= render 'shared/footer' %>
   </body>

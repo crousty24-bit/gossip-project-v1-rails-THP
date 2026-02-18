@@ -1,7 +1,7 @@
 class GossipsController < ApplicationController
   def show
     @gossip = Gossip.find(params[:id])
-    @comment = @gossip.comment.includes(:user)
+    @comments = @gossip.comments.includes(:user)
     @comment = Comment.new
   end
   def new

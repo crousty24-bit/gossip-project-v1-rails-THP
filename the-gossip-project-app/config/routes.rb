@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   resources :contacts, only: [:new, :create]
   resources :gossips do
     resources :comments, only: [:create, :edit, :update, :destroy]
+  end
   resources :cities, only: [:show]
 end

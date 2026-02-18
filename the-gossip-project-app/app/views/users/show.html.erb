@@ -42,7 +42,7 @@
                 
                 <% if @user.city %>
                   <span class="badge rounded-pill text-dark border border-warning" style="background-color: #ffe5d0;">
-                    📍 <%= @user.city.name %>
+                    📍 <%= link_to @user.city.name, city_path(@user.city.id) %>
                   </span>
                 <% end %>
               </div>

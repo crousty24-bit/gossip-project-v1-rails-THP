@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <h2>Modifier le commentaire</h2>
+  
+  <%= form_with(model: [@gossip, @comment], local: true) do |f| %>
+    <% if @comment.errors.any? %>
+      <div class="alert alert-danger">
+        <%= @comment.errors.full_messages.join(', ') %>
+      </div>
+    <% end %>
+    
+    <div class="mb-3">
+      <%= f.text_area :content, 
+                      class: "form-control", 
+                      rows: 4, 
+                      placeholder: "Ton commentaire..." %>
+    </div>
+    
+    <div class="text-end">
+      <%= f.submit "Mettre à jour", class: "btn btn-primary me-2" %>
+      <%= link_to "Annuler", gossip_path(@gossip), class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>

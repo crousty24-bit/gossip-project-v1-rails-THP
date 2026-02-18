@@ -23,7 +23,7 @@
 
           <% if @gossip.user&.city %>
             <span class="border rounded-pill px-2 py-0 text-secondary">
-              📍 <%= @gossip.user.city.name %>
+              📍 <%= link_to @gossip.user.city.name, city_path(@gossip.city.id) %>
             </span>
           <% end %>
         </div>

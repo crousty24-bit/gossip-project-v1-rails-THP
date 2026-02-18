@@ -1,27 +1,37 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-<table class="table table-hover shadow-sm">
-  <thead class="table-light">
-    <tr>
-      <th>Titre</th>
-      <th>Auteur</th>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @city.gossips.each do |gossip| %>
-      <tr>
-        <td><%= gossip.title %></td>
-        <td><%= gossip.user.first_name %></td>
-        <td><%= gossip.created_at.strftime("%d/%m/%Y") %></td>
-        <td><%= link_to "Voir", gossip_path(gossip), class: "btn btn-sm btn-primary" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
-</div>
-</div>
+    <div class="col-md-10">
+      <div class="card shadow-lg mb-4">
+        <div class="card-header text-white text-center py-4" style="background-color: #FFA756;">
+          <h1 class="mb-0"><%= @city.name %></h1>
+        </div>
+        <div class="card-body">
+          <p class="lead text-center">Potins des habitants de <%= @city.name %></p>
+        </div>
+      </div>
 
+      <table class="table table-hover shadow-sm">
+        <thead class="table-light">
+          <tr>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @city.users.includes(:gossips).each do |user| %>
+            <% user.gossips.each do |gossip| %>
+              <tr>
+                <td><%= gossip.title %></td>
+                <td><%= gossip.user.first_name %></td>
+                <td><%= gossip.created_at.strftime("%d/%m/%Y") %></td>
+                <td><%= link_to "Voir", gossip_path(gossip), class: "btn btn-sm btn-primary" %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

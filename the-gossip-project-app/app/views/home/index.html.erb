@@ -20,7 +20,12 @@
               <span class="badge mb-2" style="background-color: #FFE6CC; color: #555;">
                 Auteur : <%= gossip.user.first_name %>
               </span>
-              <p class="card-text" style="overflow: hidden;">
+              
+              <span class="badge ms-1 <%= gossip.comments.count.zero? ? 'bg-secondary' : 'bg-success' %>">
+                💬 <%= gossip.comments.count.zero? ? 'Premier à commenter' : "#{gossip.comments.count} commentaire#{gossip.comments.count > 1 ? 's' : ''}" %>
+              </span>
+              
+              <p class="card-text mt-2" style="overflow: hidden;">
                 <%= gossip.content %>
               </p>
             </div>

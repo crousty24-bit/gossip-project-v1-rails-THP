@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   def create
-    @gossip = Gossip.find(params[:id])
+    @gossip = Gossip.find(params[:gossip_id]) #modifié
     @comment = @gossip.comments.new(comment_params)
     @comment.user = User.first
 
@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
 
     if @comment.update(comment_params)
       flash[:notice] = "Commentaire modifié avec succès !"
-      redirect_to @gossip
+      redirect_to gossip_path(@gossip) #modifié
     else
       flash.now[:alert] = "Erreur : " + @comment.errors.full_messages.join(", ")
       render :edit

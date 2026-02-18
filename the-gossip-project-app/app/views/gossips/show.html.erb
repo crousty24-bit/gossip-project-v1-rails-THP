@@ -33,6 +33,7 @@
         </div>
         <div class="card-footer text-end bg-light">
           <%= link_to "Modifier ce potin", edit_gossip_path, class: "btn btn-outline-warning" %>
+          <%= button_to "Supprimer ce potin", gossip_path(@gossip), method: :delete, class: "btn btn-danger", form: { data: { turbo_confirm: "Tu es sûr ? Vraiment ?" } } %>
         </div>
 
         <div class="card-footer text-end bg-light">

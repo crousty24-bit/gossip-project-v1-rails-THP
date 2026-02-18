@@ -10,13 +10,19 @@ class GossipsController < ApplicationController
   end
   def update
     @gossip = Gossip.find(params[:id])
-  if @gossip.update(gossip_params)
-    redirect_to @gossip
-  else
-    render :edit
-  end
+    if @gossip.update(gossip_params)
+      flash[:notice] = "Potin modifié avec succès !"
+      redirect_to @gossip
+    else
+      flash.now[:alert] = "Erreur : " + @gossip.errors.full_messages.join(", ")
+      render :edit
+    end
   end
   def destroy
+    @gossip = Gossip.find(params[:id])
+    @gossip.destroy
+    flash[:notice] = "Potin supprimé avec succès !"
+    redirect_to root_path
   end
   def create
     @gossip = Gossip.new(gossip_params)# 1) On récupère les données envoyées par le formulaire

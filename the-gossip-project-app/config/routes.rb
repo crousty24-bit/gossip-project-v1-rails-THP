@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   get "/users/:id", to: "users#show", as:"user"
   get "welcome/:first_name", to: "dynamic_pages#welcome"
-  get '/static_pages/contact', to: 'static_pages#contact'
-  get '/static_pages/team', to: 'static_pages#team'
+  resources :teams, only: [:index]
+  resources :contacts, only: [:new, :create]
   resources :gossips
 end

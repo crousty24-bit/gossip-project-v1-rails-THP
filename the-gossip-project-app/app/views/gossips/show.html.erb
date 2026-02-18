@@ -31,6 +31,9 @@
           <!-- Contenu du gossip -->
           <p class="lead" style="line-height: 1.6;"><%= @gossip.content %></p>
         </div>
+        <div class="card-footer text-end bg-light">
+          <%= link_to "Modifier ce potin", edit_gossip_path, class: "btn btn-outline-warning" %>
+        </div>
 
         <div class="card-footer text-end bg-light">
           <%= link_to "Retour à la liste", root_path, class: "btn btn-outline-warning" %>

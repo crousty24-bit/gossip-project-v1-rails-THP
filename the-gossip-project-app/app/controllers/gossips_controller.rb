@@ -5,6 +5,19 @@ class GossipsController < ApplicationController
   def new
     @gossip = Gossip.new
   end
+  def edit
+    @gossip = Gossip.find(params[:id])
+  end
+  def update
+    @gossip = Gossip.find(params[:id])
+  if @gossip.update(gossip_params)
+    redirect_to @gossip
+  else
+    render :edit
+  end
+  end
+  def destroy
+  end
   def create
     @gossip = Gossip.new(gossip_params)# 1) On récupère les données envoyées par le formulaire
     @gossip.user = User.first

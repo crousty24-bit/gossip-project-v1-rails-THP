@@ -16,10 +16,17 @@
             </span>
           </p>
 
-          <!-- Date de création en petit texte -->
-          <p class="text-muted small mb-3">
+        <div class="d-flex align-items-center gap-2 text-muted small mb-3">
+          <span>
             Créé le <%= @gossip.created_at.strftime("%d %B %Y") %>
-          </p>
+          </span>
+
+          <% if @gossip.user&.city %>
+            <span class="border rounded-pill px-2 py-0 text-secondary">
+              📍 <%= @gossip.user.city.name %>
+            </span>
+          <% end %>
+        </div>
 
           <!-- Contenu du gossip -->
           <p class="lead" style="line-height: 1.6;"><%= @gossip.content %></p>

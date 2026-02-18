@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+<table class="table table-hover shadow-sm">
+  <thead class="table-light">
+    <tr>
+      <th>Titre</th>
+      <th>Auteur</th>
+      <th>Date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @city.gossips.each do |gossip| %>
+      <tr>
+        <td><%= gossip.title %></td>
+        <td><%= gossip.user.first_name %></td>
+        <td><%= gossip.created_at.strftime("%d/%m/%Y") %></td>
+        <td><%= link_to "Voir", gossip_path(gossip), class: "btn btn-sm btn-primary" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+

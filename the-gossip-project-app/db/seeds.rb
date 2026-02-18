@@ -46,10 +46,17 @@ puts "------------------------"
 puts "Creating Gossips...".colorize(:light_blue)
 gossips = []
 20.times do
-  gossip = Gossip.create(
-    title: Faker::Book.title,
+  title = nil
+  loop do
+    title = Faker::Lorem.word
+    break if title.length.between?(3, 14)
+  end
+
+  gossip = Gossip.create!(
+    title: title,
     content: Faker::Lorem.paragraph(sentence_count: 2),
-    user: users.sample
+    user: users.sample,
+    city: cities.sample
   )
   gossips << gossip
 end
@@ -70,7 +77,7 @@ gossips.each do |gossip|
   JoinTableGossipTag.create(
     gossip: gossip,
     tag: tags.sample
-  )
+  ) if gossip.persisted?
 end
 puts "Gossips-Tags properly linked !".colorize(:light_green)
 

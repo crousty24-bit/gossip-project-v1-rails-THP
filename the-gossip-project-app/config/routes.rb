@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   resources :teams, only: [:index]
   resources :contacts, only: [:new, :create]
   resources :gossips
+  resources :cities, only: [:show]
 end

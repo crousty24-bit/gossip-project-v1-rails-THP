@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user, only: [:show]
   def show
     @user = User.find(params[:id])
   end
@@ -19,5 +20,11 @@ class UsersController < ApplicationController
   private
   def user_params
     params.require(:user).permit(:first_name, :last_name, :description, :city_id, :age, :email, :password, :password_confirmation)
+  end
+  def authenticate_user
+    unless current_user
+      flash[:danger] = "Veuillez vous connecter"
+      redirect_to new_session_path
+  end
   end
 end

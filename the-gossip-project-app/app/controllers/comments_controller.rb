@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user, only: [:create, :edit, :update, :destroy]
   def create
     @gossip = Gossip.find(params[:gossip_id]) #modifié
     @comment = @gossip.comments.new(comment_params)
@@ -44,5 +45,12 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:content)
+  end
+
+  def authenticate_user
+    unless current_user
+      flash[:danger] = "Veuillez vous connecter"
+      redirect_to new_session_path
+  end
   end
 end

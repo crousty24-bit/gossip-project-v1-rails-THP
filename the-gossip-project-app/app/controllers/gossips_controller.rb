@@ -1,4 +1,6 @@
 class GossipsController < ApplicationController
+  before_action :authenticate_user, only: [:create, :edit, :update, :show, :new, :destroy]
+  before_action :authorize_user, only: [:edit, :update, :destroy]
   def show
     @gossip = Gossip.find(params[:id])
     @comments = @gossip.comments.includes(:user)
@@ -28,8 +30,7 @@ class GossipsController < ApplicationController
     redirect_to root_path
   end
   def create
-    @gossip = Gossip.new(gossip_params)# 1) On récupère les données envoyées par le formulaire
-    @gossip.user = User.first
+    @gossip = current_user.gossips.create(gossip_params)
     if @gossip.save# 2) On tente de sauvegarder en base de données
       flash[:notice] = "Potin créé avec succès !"
       redirect_to root_path # 3) Si succès → redirection vers la page show du potin créé
@@ -42,4 +43,13 @@ class GossipsController < ApplicationController
   def gossip_params # Strong parameters : sécurité Rails
     params.require(:gossip).permit(:title, :content, tag_ids: [])
   end
+  def authenticate_user
+    unless current_user
+      flash[:danger] = "Veuillez vous connecter"
+      redirect_to new_session_path
+  end
+  def authorize_user
+    redirect_to root_path unless @gossip.user == current_user
+  end
+end
 end

@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   resources :teams, only: [:index]
   resources :contacts, only: [:new, :create]
   resources :gossips do
-    resources :comments, only: [:create, :edit, :update, :destroy]
+    resources :likes, only: [:create, :destroy]
+    resources :comments, only: [:create, :edit, :update, :destroy] do
+      resources :likes, only: [:create, :destroy], controller: "comment_likes"
+    end
   end
   resources :cities, only: [:show]
   resources :sessions, only: [:new, :create, :destroy]

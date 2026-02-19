@@ -42,6 +42,26 @@
 
           <!-- Contenu -->
           <p class="lead" style="line-height: 1.7;"><%= @gossip.content %></p>
+
+          <!-- ================== Likes Gossip ================== -->
+          <div class="mb-3">
+            <% if current_user %>
+              <% like = current_user.likes.find_by(likeable: @gossip) %>
+              <% if like %>
+                <%= button_to "❤️ Unlike", gossip_like_path(@gossip, like),
+                      method: :delete,
+                      class: "btn btn-sm btn-outline-danger rounded-pill me-2" %>
+              <% else %>
+                <%= button_to "🤍 Like", gossip_likes_path(@gossip),
+                      method: :post,
+                      class: "btn btn-sm btn-outline-primary rounded-pill me-2" %>
+              <% end %>
+              <span class="small text-muted"><%= @gossip.likes.count %> likes</span>
+            <% else %>
+              <span class="small text-muted"><%= @gossip.likes.count %> likes</span>
+            <% end %>
+          </div>
+
         </div>
 
         <!-- FOOTER ACTIONS -->
@@ -76,7 +96,6 @@
     </div>
   </div>
 </div>
-
 
 <!-- ================== COMMENTAIRES ================== -->
 
@@ -125,6 +144,25 @@
               </div>
 
               <p><%= comment.content %></p>
+
+              <!-- ================== Likes Comment ================== -->
+              <div class="mb-2">
+                <% if current_user %>
+                  <% like = current_user.likes.find_by(likeable: comment) %>
+                  <% if like %>
+                    <%= button_to "❤️ Unlike", gossip_comment_like_path(@gossip, comment, like),
+                          method: :delete,
+                          class: "btn btn-sm btn-outline-danger rounded-pill me-2" %>
+                  <% else %>
+                    <%= button_to "🤍 Like", gossip_comment_likes_path(@gossip, comment),
+                          method: :post,
+                          class: "btn btn-sm btn-outline-primary rounded-pill me-2" %>
+                  <% end %>
+                  <span class="small text-muted"><%= comment.likes.count %> likes</span>
+                <% else %>
+                  <span class="small text-muted"><%= comment.likes.count %> likes</span>
+                <% end %>
+              </div>
 
               <!-- Actions commentaire -->
               <% if current_user == comment.user %>

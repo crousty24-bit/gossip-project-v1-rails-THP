@@ -12,6 +12,7 @@ class GossipsController < ApplicationController
   end
   def edit
     @gossip = Gossip.find(params[:id])
+    @tags = Tag.all
   end
   def update
     @gossip = Gossip.find(params[:id])
@@ -44,14 +45,8 @@ class GossipsController < ApplicationController
   def gossip_params # Strong parameters : sécurité Rails
     params.require(:gossip).permit(:title, :content, tag_ids: [])
   end
-  def authenticate_user
-    unless current_user
-      flash[:danger] = "Veuillez vous connecter"
-      redirect_to new_session_path
-  end
   def authorize_user
     @gossip = Gossip.find(params[:id])
     redirect_to root_path unless @gossip.user == current_user
   end
-end
 end

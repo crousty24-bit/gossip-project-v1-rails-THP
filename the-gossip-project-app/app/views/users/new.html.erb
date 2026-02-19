@@ -5,19 +5,7 @@
         <div class="card-body p-4">
           <h2 class="text-center mb-4">S'inscrire</h2>
 
-          <%= form_with(model: @user, local: true) do |f| %>
-            
-            <!-- Affichage des erreurs si besoin -->
-            <% if @user.errors.any? %>
-              <div class="alert alert-danger">
-                <p>Nous n'avons pas pu créer le compte :</p>
-                <ul>
-                  <% @user.errors.full_messages.each do |message| %>
-                    <li><%= message %></li>
-                  <% end %>
-                </ul>
-              </div>
-            <% end %>
+          <%= form_with(model: @user, local: true, data: { turbo: false }) do |f| %>
 
             <div class="mb-3">
               <%= f.label :email, "Email", class: "form-label" %>

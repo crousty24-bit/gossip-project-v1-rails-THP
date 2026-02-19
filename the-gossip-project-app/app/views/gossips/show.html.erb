@@ -28,6 +28,14 @@
           <% end %>
         </div>
 
+        <div class="mb-3">
+          <% @gossip.tags.each do |tag| %>
+            <span class="badge me-1" style="background-color: <%= tag.color %>;">
+              <%= tag.title %>
+            </span>
+          <% end %>
+        </div>
+
           <!-- Contenu du gossip -->
           <p class="lead" style="line-height: 1.6;"><%= @gossip.content %></p>
         </div>

@@ -40,6 +40,6 @@ class GossipsController < ApplicationController
   end
   private
   def gossip_params # Strong parameters : sécurité Rails
-    params.require(:gossip).permit(:title, :content)
+    params.require(:gossip).permit(:title, :content, tag_ids: [])
   end
 end

@@ -55,8 +55,7 @@ gossips = []
   gossip = Gossip.create!(
     title: title,
     content: Faker::Lorem.paragraph(sentence_count: 2),
-    user: users.sample,
-    city: cities.sample
+    user: users.sample
   )
   gossips << gossip
 end

@@ -35,6 +35,7 @@ class GossipsController < ApplicationController
       flash[:notice] = "Potin créé avec succès !"
       redirect_to root_path # 3) Si succès → redirection vers la page show du potin créé
     else
+      @tags = Tag.all
       flash.now[:alert] = "Erreur : " + @gossip.errors.full_messages.join(", ")
       render :new # 4) Si échec → on réaffiche le formulaire avec les erreurs
     end
@@ -49,6 +50,7 @@ class GossipsController < ApplicationController
       redirect_to new_session_path
   end
   def authorize_user
+    @gossip = Gossip.find(params[:id])
     redirect_to root_path unless @gossip.user == current_user
   end
 end

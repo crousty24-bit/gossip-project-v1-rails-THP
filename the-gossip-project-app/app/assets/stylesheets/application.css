@@ -20,7 +20,7 @@ footer {
 
 .navbar {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  height: 56px; /* ou la hauteur exacte de votre navbar */
+  height: 56px;
 }
 
 .navbar-brand {
@@ -55,7 +55,7 @@ footer {
 
 body {
   background: linear-gradient(135deg, #ff7e5f, #ffb199, #fcd3c1, #e1c4f3);
-  padding-top: 50px;
+  padding-top: 56px;
 }
 
 .card {

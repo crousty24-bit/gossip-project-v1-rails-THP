@@ -1,5 +1,4 @@
 <form action="<%= gossips_path %>" method="POST" data-turbo="false" class="container py-5">
-
   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
   <div class="row justify-content-center">
@@ -9,19 +8,55 @@
 
           <h2 class="text-center mb-4 fw-bold">Balance ton potin 🫢</h2>
 
+          <!-- TITRE -->
           <div class="mb-3">
             <label class="form-label fw-semibold">Titre</label>
-            <input type="text" name="gossip[title]" class="form-control form-control-lg" placeholder="Un titre croustillant...">
+            <input type="text"
+                   name="gossip[title]"
+                   class="form-control form-control-lg border-warning shadow-sm"
+                   placeholder="Un titre croustillant...">
           </div>
 
+          <!-- TAG DROPDOWN -->
+          <div class="mb-4 text-center">
+            <div class="dropdown d-inline-block w-100">
+              <button class="btn btn-outline-warning btn-lg rounded-pill px-4 w-100 shadow-sm dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                🏷️ Sélectionne un tag
+              </button>
+
+              <ul class="dropdown-menu w-100 p-2 rounded-4 shadow-lg border-0">
+                <% @tags.each do |tag| %>
+                  <li class="dropdown-item">
+                    <label class="d-flex align-items-center gap-2 w-100">
+                      <input type="checkbox"
+                             name="gossip[tag_ids][]"
+                             value="<%= tag.id %>"
+                             class="form-check-input">
+
+                      <span class="fw-semibold"><%= tag.title %></span>
+                    </label>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+
+          <!-- CONTENU -->
           <div class="mb-4">
             <label class="form-label fw-semibold">Ton potin</label>
-            <textarea name="gossip[content]" rows="5" class="form-control form-control-lg" placeholder="Raconte tout 👀"></textarea>
+            <textarea name="gossip[content]"
+                      rows="5"
+                      class="form-control form-control-lg border-warning shadow-sm"
+                      placeholder="Raconte tout 👀"></textarea>
           </div>
 
+          <!-- SUBMIT -->
           <div class="d-grid">
-            <button type="submit" class="btn btn-primary btn-lg rounded-pill">
-              Envoyer le potin
+            <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow">
+              Envoyer le potin 🚀
             </button>
           </div>
 

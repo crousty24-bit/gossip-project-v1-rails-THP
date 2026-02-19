@@ -6,6 +6,7 @@ class GossipsController < ApplicationController
   end
   def new
     @gossip = Gossip.new
+    @tags = Tag.all
   end
   def edit
     @gossip = Gossip.find(params[:id])

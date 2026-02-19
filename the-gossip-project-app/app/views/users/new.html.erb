@@ -1,0 +1,64 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4">S'inscrire</h2>
+
+          <%= form_with(model: @user, local: true) do |f| %>
+            
+            <!-- Affichage des erreurs si besoin -->
+            <% if @user.errors.any? %>
+              <div class="alert alert-danger">
+                <p>Nous n'avons pas pu créer le compte :</p>
+                <ul>
+                  <% @user.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="mb-3">
+              <%= f.label :email, "Email", class: "form-label" %>
+              <%= f.email_field :email, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password, "Mot de passe (6 car. min)", class: "form-label" %>
+              <%= f.password_field :password, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password_confirmation, "Confirmation du mot de passe", class: "form-label" %>
+              <%= f.password_field :password_confirmation, class: "form-control" %>
+            </div>
+
+            <!-- Exemple de champs supplémentaires requis par ton modèle -->
+            <div class="row mb-3">
+                <div class="col">
+                  <%= f.label :first_name, "Prénom", class: "form-label" %>
+                  <%= f.text_field :first_name, class: "form-control" %>
+                </div>
+                <div class="col">
+                  <%= f.label :last_name, "Nom", class: "form-label" %>
+                  <%= f.text_field :last_name, class: "form-control" %>
+                </div>
+              </div>
+            
+            <!-- Sélecteur de ville (requis car un user belongs_to city) -->
+            <div class="mb-3">
+              <%= f.label :city_id, "Ville", class: "form-label" %>
+              <%= f.collection_select :city_id, City.all.order(:name), :id, :name, {}, {class: "form-select"} %>
+            </div>
+
+            <div class="d-grid">
+              <%= f.submit "Créer mon compte", class: "btn btn-success btn-lg" %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -21,6 +21,9 @@
             <li class="nav-item">
                 <%= link_to "Se connecter", new_session_path, class: "nav-link"%>
             </li>
+            <li class="nav-item">
+                <%= link_to "Deconnexion", session_path(session.id), data: { turbo_method: :delete }, class: "nav-link"%>
+            </li>
         </ul>
         <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Search">

@@ -20,6 +20,33 @@
               placeholder="<%= @gossip.title %>"
               value="<%= @gossip.title %>">
           </div>
+          
+          <!-- TAG DROPDOWN -->
+          <div class="mb-4 text-center">
+            <div class="dropdown d-inline-block w-100">
+              <button class="btn btn-outline-warning btn-lg rounded-pill px-4 w-100 shadow-sm dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                🏷️ Sélectionne un tag
+              </button>
+
+              <ul class="dropdown-menu w-100 p-2 rounded-4 shadow-lg border-0">
+                <% @tags.each do |tag| %>
+                  <li class="dropdown-item">
+                    <label class="d-flex align-items-center gap-2 w-100">
+                      <input type="checkbox"
+                              name="gossip[tag_ids][]"
+                              value="<%= tag.id %>"
+                              class="form-check-input">
+
+                      <span class="fw-semibold"><%= tag.title %></span>
+                    </label>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
 
           <div class="mb-4">
             <label for="gossip_content" class="form-label fw-semibold">Ton potin</label>

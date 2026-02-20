@@ -26,6 +26,11 @@
               <span class="badge ms-1 <%= gossip.comments.count.zero? ? 'bg-secondary' : 'bg-success' %>">
                 💬 <%= gossip.comments.count.zero? ? 'Premier à commenter' : "#{gossip.comments.count} commentaire#{gossip.comments.count > 1 ? 's' : ''}" %>
               </span>
+
+              <p class="text-muted">
+                <!-- Affiche le nombre de likes -->
+                ❤️ <%= gossip.likes.count %> like(s)
+              </p>
               
               <p class="card-text mt-2" style="overflow: hidden;">
                 <%= gossip.content %>

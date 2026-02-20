@@ -17,6 +17,7 @@
             <th>Auteur</th>
             <th>Date</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -27,6 +28,26 @@
                 <td><%= gossip.user.first_name %></td>
                 <td><%= gossip.created_at.strftime("%d/%m/%Y") %></td>
                 <td><%= link_to "Voir", gossip_path(gossip), class: "btn btn-sm btn-primary" %></td>
+
+                <td>
+                  <div class="d-flex align-items-center">
+                    <% if current_user %>
+                      <% like = current_user.likes.find_by(likeable: gossip) %>
+                      <% if like %>
+                        <%= button_to "❤️ Unlike", gossip_like_path(gossip, like),
+                              method: :delete,
+                              class: "btn btn-sm btn-outline-danger rounded-pill me-2" %>
+                      <% else %>
+                        <%= button_to "🤍 Like", gossip_likes_path(gossip),
+                              method: :post,
+                              class: "btn btn-sm btn-outline-primary rounded-pill me-2" %>
+                      <% end %>
+                      <span class="small text-muted"><%= gossip.likes.count %> likes</span>
+                    <% else %>
+                      <span class="small text-muted"><%= gossip.likes.count %> likes</span>
+                    <% end %>
+                  </div>
+                </td>
               </tr>
             <% end %>
           <% end %>

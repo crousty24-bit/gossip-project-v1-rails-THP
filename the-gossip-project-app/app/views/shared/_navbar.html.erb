@@ -21,7 +21,7 @@
                     <%= link_to "Deconnexion", session_path(session.id), data: { turbo_method: :delete }, class: "nav-link"%>
                 </li>
                 <li class="nav-item">
-                    <span class="nav-link text-muted">Connecté en tant que <%= current_user.first_name %></span>
+                    <span class="nav-link text">Connecté en tant que <%= current_user.first_name %></span>
                 </li>
             <!-- Menu login/signin only if user is not connected -->    
             <% else %>

@@ -1,13 +1,13 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user, only: [:create, :edit, :update, :destroy]
   def create
-    @gossip = Gossip.find(params[:gossip_id]) #modifié
-    @comment = @gossip.comments.new(comment_params)
-    @comment.user = User.first
-
+    @commentable = find_commentable
+    @comment = @commentable.comments.new(comment_params)
+    @comment.user = current_user
+    @comment.save
     if @comment.save
       flash[:notice] = "Commentaire ajouté"
-      redirect_to gossip_path(@gossip)
+      redirect_to gossip_path(params[:gossip_id])
     else
       flash.now[:alert] = "Erreur : " + @comment.errors.full_messages.join(", ")
       @comments = @gossip.comments.includes(:user)
@@ -51,6 +51,14 @@ class CommentsController < ApplicationController
     unless current_user
       flash[:danger] = "Veuillez vous connecter"
       redirect_to new_session_path
+    end
   end
+  
+  def find_commentable
+    if params[:comment_id]
+      Comment.find(params[:comment_id])
+    else params[:gossip_id]
+      Gossip.find(params[:gossip_id])
+    end
   end
 end

@@ -104,8 +104,12 @@
 
     <!-- Nouveau commentaire -->
     <div class="mb-4">
-      <div class="d-flex gap-3">
-        <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="User Avatar" class="user-avatar rounded-circle" width="50">
+      <div class="d-flex gap-3 align-items-start">
+        <img src="https://randomuser.me/api/portraits/women/4.jpg"
+             alt="User Avatar"
+             class="rounded-circle flex-shrink-0"
+             width="50" height="50"
+             style="object-fit: cover;">
 
         <div class="flex-grow-1">
           <%= form_with(model: [@gossip, @comment], local: true) do |f| %>
@@ -129,10 +133,12 @@
       <% @comments.each do |comment| %>
         <div class="card mb-3 border-0 shadow-sm rounded-4 p-3">
 
-          <div class="d-flex gap-3">
-            <img src="https://i.pravatar.cc/60?u=<%= comment.user.email %>" 
-                alt="avatar" 
-                class="rounded-circle" width="50">
+          <div class="d-flex gap-3 align-items-start">
+            <img src="https://i.pravatar.cc/60?u=<%= comment.user.email %>"
+                 alt="avatar"
+                 class="rounded-circle flex-shrink-0"
+                 width="50" height="50"
+                 style="object-fit: cover;">
 
             <div class="flex-grow-1">
 
@@ -145,8 +151,47 @@
 
               <p><%= comment.content %></p>
 
-              <!-- ================== Likes Comment ================== -->
-              <div class="mb-2">
+              <!-- Bouton Répondre -->
+              <details class="mb-2">
+                <summary class="btn btn-sm btn-outline-secondary rounded-pill">
+                  Répondre
+                </summary>
+
+                <div class="mt-2">
+                  <%= form_with model: [@gossip, Comment.new], local: true do |f| %>
+                    <%= hidden_field_tag :comment_id, comment.id %>
+
+                    <%= f.text_field :content,
+                          class: "form-control form-control-sm mb-2",
+                          placeholder: "Répondre..." %>
+
+                    <%= f.submit "Publier", class: "btn btn-sm btn-outline-primary rounded-pill" %>
+                  <% end %>
+                </div>
+              </details>
+
+              <!-- AFFICHAGE DES RÉPONSES -->
+              <% comment.comments.each do |reply| %>
+                <div class="card mt-2 ms-4 border-0 bg-light rounded-3 p-2">
+
+                  <div class="d-flex gap-2 align-items-start">
+                    <img src="https://i.pravatar.cc/40?u=<%= reply.user.email %>"
+                        class="rounded-circle flex-shrink-0"
+                        width="35" height="35"
+                        style="object-fit: cover;">
+
+                    <div>
+                      <strong><%= reply.user.first_name %></strong>
+                      <small class="text-muted ms-2"><%= reply.created_at.strftime("%d %B %Y, %H:%M") %></small>
+                      <p class="mb-1"><%= reply.content %></p>
+                    </div>
+                  </div>
+
+                </div>
+              <% end %>
+
+              <!-- Likes Comment -->
+              <div class="mb-2 mt-2">
                 <% if current_user %>
                   <% like = current_user.likes.find_by(likeable: comment) %>
                   <% if like %>

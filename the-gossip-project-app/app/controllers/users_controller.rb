@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:success] = "Bienvenue #{@user.first_name} ! Ton compte a été créé."
+      flash[:notice] = "Bienvenue #{@user.first_name} ! Ton compte a été créé. Connecte-toi pour commérer !"
       redirect_to root_path
     else
       flash.now[:alert] = "Erreur : " + @user.errors.full_messages.join(", ")

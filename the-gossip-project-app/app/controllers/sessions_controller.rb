@@ -7,11 +7,10 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
 
-      # ✅ Gérer la checkbox
       if params[:remember_me] == "1"
-        remember(user)  # crée cookie permanent
+        remember(user)  
       else
-        forget(user)    # supprime cookie si existant
+        forget(user)    
       end
 
       redirect_to root_path
@@ -22,7 +21,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out(current_user)  # supprime session + cookie
+    log_out(current_user)  
     redirect_to root_path
   end
 end

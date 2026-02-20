@@ -20,10 +20,7 @@
 
           <!-- Date + Ville -->
           <div class="d-flex align-items-center gap-3 text-muted small mb-3">
-            <span>
-              Créé le <%= @gossip.created_at.strftime("%d %B %Y") %>
-            </span>
-
+            <span>Créé le <%= @gossip.created_at.strftime("%d %B %Y") %></span>
             <% if @gossip.user&.city %>
               <span class="border rounded-pill px-2 py-1 text-secondary bg-light">
                 📍 <%= link_to @gossip.user.city.name, city_path(@gossip.user.city.id), class: "text-decoration-none text-secondary" %>
@@ -34,46 +31,38 @@
           <!-- Tags -->
           <div class="mb-3">
             <% @gossip.tags.each do |tag| %>
-              <span class="badge me-1" style="background-color: <%= tag.color %>;">
-                <%= tag.title %>
-              </span>
+              <span class="badge me-1" style="background-color: <%= tag.color %>;"><%= tag.title %></span>
             <% end %>
           </div>
 
           <!-- Contenu -->
           <p class="lead" style="line-height: 1.7;"><%= @gossip.content %></p>
 
-          <!-- ================== Likes Gossip ================== -->
-          <div class="mb-3">
+          <!-- Likes Gossip -->
+          <div class="mb-3 d-flex gap-2 align-items-center">
             <% if current_user %>
               <% like = current_user.likes.find_by(likeable: @gossip) %>
               <% if like %>
                 <%= button_to "❤️ Unlike", gossip_like_path(@gossip, like),
                       method: :delete,
-                      class: "btn btn-sm btn-outline-danger rounded-pill me-2" %>
+                      class: "btn btn-sm btn-outline-danger rounded-pill" %>
               <% else %>
                 <%= button_to "🤍 Like", gossip_likes_path(@gossip),
                       method: :post,
-                      class: "btn btn-sm btn-outline-primary rounded-pill me-2" %>
+                      class: "btn btn-sm btn-outline-primary rounded-pill" %>
               <% end %>
-              <span class="small text-muted"><%= @gossip.likes.count %> likes</span>
-            <% else %>
-              <span class="small text-muted"><%= @gossip.likes.count %> likes</span>
             <% end %>
+            <span class="small text-muted"><%= @gossip.likes.count %> likes</span>
           </div>
 
         </div>
 
         <!-- FOOTER ACTIONS -->
         <div class="card-footer bg-light d-flex justify-content-between align-items-center">
-
-          <!-- Retour -->
           <%= link_to "← Retour", root_path, class: "btn btn-outline-secondary rounded-pill px-4" %>
 
-          <!-- ACTIONS UNIQUEMENT POUR L’AUTEUR -->
           <% if current_user == @gossip.user %>
             <div class="d-flex gap-2">
-
               <%= link_to edit_gossip_path(@gossip),
                   class: "btn rounded-pill px-4 fw-semibold",
                   style: "background-color: #FFB347; border: none; color: white;" do %>
@@ -86,10 +75,8 @@
                   form: { data: { turbo_confirm: "Tu es sûr de vouloir supprimer ce potin ?" } } do %>
                 🗑️ Supprimer
               <% end %>
-
             </div>
           <% end %>
-
         </div>
 
       </div>
@@ -98,133 +85,116 @@
 </div>
 
 <!-- ================== COMMENTAIRES ================== -->
-
 <div class="container mt-5">
   <div class="comment-section">
 
-    <!-- Nouveau commentaire -->
-    <div class="mb-4">
-      <div class="d-flex gap-3 align-items-start">
-        <img src="https://randomuser.me/api/portraits/women/4.jpg"
-             alt="User Avatar"
-             class="rounded-circle flex-shrink-0"
-             width="50" height="50"
-             style="object-fit: cover;">
-
-        <div class="flex-grow-1">
-          <%= form_with(model: [@gossip, @comment], local: true) do |f| %>
-
-            <%= f.text_area :content,
-                  class: "form-control",
-                  rows: 3,
-                  placeholder: "Écris un commentaire..." %>
-
-            <div class="mt-3 text-end">
-              <%= f.submit "Publier", class: "btn btn-primary rounded-pill px-4" %>
-            </div>
-
-          <% end %>
-        </div>
-      </div>
+<div class="flex-grow-1">
+  <%= form_with model: @comment, url: gossip_comments_path(@gossip), local: true do |f| %>
+    <%= f.text_area :content, class: "form-control", rows: 3, placeholder: "Écris un commentaire..." %>
+    <div class="mt-3 text-end">
+      <%= f.submit "Publier", class: "btn btn-primary rounded-pill px-4" %>
     </div>
+  <% end %>
+</div>
 
     <!-- Liste des commentaires -->
     <div class="comments-list">
       <% @comments.each do |comment| %>
-        <div class="card mb-3 border-0 shadow-sm rounded-4 p-3">
+        <div class="card mb-3 border-0 shadow-sm rounded-4 p-3 position-relative">
 
           <div class="d-flex gap-3 align-items-start">
             <img src="https://i.pravatar.cc/60?u=<%= comment.user.email %>"
-                 alt="avatar"
-                 class="rounded-circle flex-shrink-0"
-                 width="50" height="50"
-                 style="object-fit: cover;">
+                alt="avatar"
+                class="rounded-circle flex-shrink-0"
+                width="50" height="50"
+                style="object-fit: cover;">
 
             <div class="flex-grow-1">
 
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <strong><%= comment.user&.first_name || "Anonyme" %></strong>
-                <small class="text-muted">
-                  <%= comment.created_at.strftime("%d %B %Y, %H:%M") %>
-                </small>
+                <small class="text-muted"><%= comment.created_at.strftime("%d %B %Y, %H:%M") %></small>
               </div>
 
               <p><%= comment.content %></p>
 
-              <!-- Bouton Répondre -->
+              <!-- Boutons Répondre + Like au-dessus du champ de réponse -->
+              <% if current_user %>
+                <div class="d-flex gap-2 mb-2 align-items-center">
+                  <% like = current_user.likes.find_by(likeable: comment) %>
+                  <% if like %>
+                    <%= button_to "❤️ Unlike", gossip_comment_like_path(@gossip, comment, like),
+                          method: :delete,
+                          class: "btn btn-sm btn-outline-danger rounded-pill" %>
+                  <% else %>
+                    <%= button_to "🤍 Like", gossip_comment_likes_path(@gossip, comment),
+                          method: :post,
+                          class: "btn btn-sm btn-outline-primary rounded-pill" %>
+                  <% end %>
+                  <span class="small text-muted"><%= comment.likes.count %> likes</span>
+                </div>
+              <% end %>
+
+              <!-- Réponse au commentaire -->
               <details class="mb-2">
                 <summary class="btn btn-sm btn-outline-secondary rounded-pill">
                   Répondre
                 </summary>
-
                 <div class="mt-2">
-                  <%= form_with model: [@gossip, Comment.new], local: true do |f| %>
+                  <%= form_with model: Comment.new, url: gossip_comments_path(@gossip), local: true, html: { class: "d-flex gap-2 align-items-start" } do |f| %>
                     <%= hidden_field_tag :comment_id, comment.id %>
-
-                    <%= f.text_field :content,
-                          class: "form-control form-control-sm mb-2",
-                          placeholder: "Répondre..." %>
-
-                    <%= f.submit "Publier", class: "btn btn-sm btn-outline-primary rounded-pill" %>
+                    <%= f.text_area :content, class: "form-control flex-grow-1", rows: 2, placeholder: "Écris ta réponse..." %>
+                    <%= f.submit "Publier", class: "btn btn-sm btn-outline-primary" %>
                   <% end %>
                 </div>
               </details>
 
               <!-- AFFICHAGE DES RÉPONSES -->
               <% comment.comments.each do |reply| %>
-                <div class="card mt-2 ms-4 border-0 bg-light rounded-3 p-2">
-
+                <div class="card mt-2 ms-4 border-0 bg-light rounded-3 p-2 position-relative">
                   <div class="d-flex gap-2 align-items-start">
                     <img src="https://i.pravatar.cc/40?u=<%= reply.user.email %>"
                         class="rounded-circle flex-shrink-0"
                         width="35" height="35"
                         style="object-fit: cover;">
-
-                    <div>
+                    <div class="flex-grow-1">
                       <strong><%= reply.user.first_name %></strong>
                       <small class="text-muted ms-2"><%= reply.created_at.strftime("%d %B %Y, %H:%M") %></small>
                       <p class="mb-1"><%= reply.content %></p>
+
+                      <!-- Editer + Supprimer replies sur la même ligne -->
+                      <% if current_user == reply.user %>
+                        <div class="d-flex gap-2 mb-2">
+                          <%= link_to "Editer", edit_gossip_comment_path(@gossip, reply),
+                              class: "btn btn-sm btn-outline-secondary rounded-pill" %>
+                          <%= button_to gossip_comment_path(@gossip, reply),
+                              method: :delete,
+                              class: "btn btn-sm btn-danger rounded-pill",
+                              form: { data: { turbo_confirm: "Supprimer ce commentaire ?" } } do %>
+                            Supprimer
+                          <% end %>
+                        </div>
+                      <% end %>
                     </div>
                   </div>
-
-                </div>
-              <% end %>
-
-              <!-- Likes Comment -->
-              <div class="mb-2 mt-2">
-                <% if current_user %>
-                  <% like = current_user.likes.find_by(likeable: comment) %>
-                  <% if like %>
-                    <%= button_to "❤️ Unlike", gossip_comment_like_path(@gossip, comment, like),
-                          method: :delete,
-                          class: "btn btn-sm btn-outline-danger rounded-pill me-2" %>
-                  <% else %>
-                    <%= button_to "🤍 Like", gossip_comment_likes_path(@gossip, comment),
-                          method: :post,
-                          class: "btn btn-sm btn-outline-primary rounded-pill me-2" %>
-                  <% end %>
-                  <span class="small text-muted"><%= comment.likes.count %> likes</span>
-                <% else %>
-                  <span class="small text-muted"><%= comment.likes.count %> likes</span>
-                <% end %>
-              </div>
-
-              <!-- Actions commentaire -->
-              <% if current_user == comment.user %>
-                <div class="d-flex gap-2">
-                  <%= link_to "Editer", edit_gossip_comment_path(@gossip, comment),
-                      class: "btn btn-sm btn-outline-secondary rounded-pill" %>
-
-                  <%= button_to gossip_comment_path(@gossip, comment),
-                      method: :delete,
-                      class: "btn btn-sm btn-outline-danger rounded-pill",
-                      form: { data: { turbo_confirm: "Supprimer ce commentaire ?" } } %>
                 </div>
               <% end %>
 
             </div>
-          </div>
 
+            <!-- Bouton Supprimer commentaire principal -->
+            <% if current_user == comment.user %>
+              <div class="position-absolute" style="bottom: 10px; right: 10px;">
+                <%= button_to gossip_comment_path(@gossip, comment),
+                    method: :delete,
+                    class: "btn btn-sm btn-danger rounded-pill",
+                    form: { data: { turbo_confirm: "Supprimer ce commentaire ?" } } do %>
+                  Supprimer
+                <% end %>
+              </div>
+            <% end %>
+
+          </div>
         </div>
       <% end %>
     </div>

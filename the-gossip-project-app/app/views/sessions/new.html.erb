@@ -17,6 +17,12 @@
               <%= f.password_field :password, class: "form-control" %>
             </div>
 
+            <!-- Case Se souvenir de moi -->
+            <div class="form-check mb-3">
+              <%= f.check_box :remember_me, class: "form-check-input", id: "remember_me" %>
+              <%= f.label :remember_me, "Se souvenir de moi", class: "form-check-label", for: "remember_me" %>
+            </div>
+
             <div class="d-grid mt-4">
               <%= f.submit "Se connecter", class: "btn btn-primary btn-lg" %>
             </div>

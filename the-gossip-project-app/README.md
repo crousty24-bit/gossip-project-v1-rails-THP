@@ -3,12 +3,14 @@
 A Ruby on Rails application that implements a small social "gossip" platform — users can create gossips, tag them, like content, leave comments and send private messages. The repository includes production-ready Docker configuration and simple PWA support.
 
 ## Key features
-- Create, view, edit and delete gossips
-- Tags (many-to-many via join table)
-- Comments and polymorphic likes (gossips & comments)
-- Private messages and basic user profiles (users belong to cities)
-- Test suite (Minitest/system tests) and basic security/static analysis tooling
-- Dockerfile for containerized production builds and `bin/dev` for local development
+- **Authentication & user profiles** — User registration, login/logout with password hashing, and "remember me" functionality for persistent sessions
+- **Gossips** — Create, view, edit, and delete gossips with color-coded tags (many-to-many via join table)
+- **Social interactions** — Like gossips and comments (polymorphic likes), leave comments with reply functionality
+- **Private messages** — Send messages between users
+- **User management** — User profiles, city associations, team member administration with LinkedIn/GitHub links
+- **UI/UX** — Responsive navbar with authentication status display, jumbotron with logo, improved image handling in comments
+- **Testing & analysis** — Unit and integration tests (Minitest), system tests, RuboCop linting, and Brakeman security scanning
+- **Production-ready** — Dockerfile for containerized builds and `bin/dev` for local development
 
 ## Tech stack
 - Ruby 3.4.2 (`.ruby-version`)
@@ -77,6 +79,9 @@ The `Dockerfile` is production-oriented (see comments in the file). For local co
 
 ## Contributing
 - Fork the repository, create a topic branch, add tests for new behavior and open a pull request. Ensure `rails test` passes before submitting.
+
+## Project Status
+✅ **COMPLETE** — Core features are fully implemented. This project serves as a foundation for a small social "gossip" platform with all essential functionality (authentication, gossips, comments, likes, messaging, team management) working end-to-end. The app is production-ready with Docker support and can be extended for additional features as needed.
 
 ## Deployment notes
 - The repo contains a production-ready Dockerfile. Ensure `RAILS_MASTER_KEY` and any production DB credentials are set in the deployment environment.
